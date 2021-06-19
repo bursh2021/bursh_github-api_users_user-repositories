@@ -19,7 +19,7 @@ const Input = styled.input`
 	outline: none;
 	border: none;
 	height: 9vh;
-	width: 500px;
+	width: 400px;
 
 	@media (max-width: 567px) {
 		width: 250px;

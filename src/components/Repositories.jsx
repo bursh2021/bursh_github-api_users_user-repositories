@@ -44,7 +44,7 @@ const Flex = styled.div`
 		flex-direction: column;
 	}
 `
-const Block2 = styled.div`
+const Block2 = styled(motion.div)`
 	display: flex;
 	flex-direction: column;
 	margin-left: 30px;
@@ -59,12 +59,12 @@ const Ava = styled.img`
 	border-radius: 50%;
 	object-fit: cover;
 `
-const D = styled.div`
+const D = styled(motion.div)`
 	font-size: 15px;
 	color: black;
 	padding: 0px 10px;
 `
-const Dr = styled.div`
+const Dr = styled(motion.div)`
 	display: flex;
 	justify-content: start;
 	padding: 10px 15px;
@@ -138,6 +138,25 @@ const Img = styled.img`
 	height: 5vh;
 	margin-right: 20px;
 `
+const container = {
+	hidden: { opacity: 1, scale: 0 },
+	visible: {
+		opacity: 1,
+		scale: 1,
+		transition: {
+			delayChildren: 0.3,
+			staggerChildren: 0.2,
+		},
+	},
+}
+
+const item = {
+	hidden: { y: 20, opacity: 0 },
+	visible: {
+		y: 0,
+		opacity: 1,
+	},
+}
 
 function Repositories(props) {
 	const dispatch = useDispatch()
@@ -150,9 +169,17 @@ function Repositories(props) {
 
 	return (
 		<WrapperGrid
-			initial={{ y: -120 }}
+			initial={{
+				y: -50,
+				opacity: 0,
+			}}
 			animate={{
 				y: 0,
+				opacity: 1,
+			}}
+			transition={{
+				delay: 0.3,
+				duration: 0.2,
 			}}
 		>
 			<Block1>
@@ -185,7 +212,7 @@ function Repositories(props) {
 								className={currentPage <= 5 ? null : "current_page_last"}
 								onClick={() => dispatch(setCurrentPage(1))}
 							>
-								{currentPage <= 5 ? null : <div>{1}</div>}
+								{currentPage <= 5 ? null : <div>{1} ... </div>}
 							</span>
 							{pages.map((p, id) => (
 								<span
@@ -205,13 +232,15 @@ function Repositories(props) {
 								onClick={() => dispatch(setCurrentPage(lastPage))}
 							>
 								{currentPage >= lastPage - 5 ? null : (
-									<div>{lastPage === 1 ? null : <div>{lastPage}</div>}</div>
+									<div>
+										{lastPage === 1 ? null : <div> ... {lastPage}</div>}
+									</div>
 								)}
 							</span>
 						</Pages>
-						<D>
+						<D variants={container} initial='hidden' animate='visible'>
 							{repUser.map((rep, id) => (
-								<D key={id}>
+								<D variants={item} key={id}>
 									<Dr>
 										<Img
 											src={
@@ -226,7 +255,7 @@ function Repositories(props) {
 										</div>
 									</Dr>
 								</D>
-							))}
+							))}{" "}
 						</D>
 					</Block2>
 				</div>
