@@ -1,7 +1,7 @@
 import React, { useState } from "react"
 import styled from "styled-components"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-
+import Modal from "./Modal"
 import { faSearch } from "@fortawesome/free-solid-svg-icons"
 
 const Header = styled.div`
@@ -29,20 +29,24 @@ const Input = styled.input`
 	}
 `
 
-// const Button = styled.button`
-// 	align-items: center;
-// 	background: white;
-// 	border: none;
-// 	height: 9vh;
-// 	padding: 15px;
-// 	position: absolute;
-// 	left: 260px;
-// 	:active {
-// 	}
-// `
+const Button = styled.button`
+	align-items: center;
+	background: #727272;
+	border: none;
+	height: 9.5vh;
+	padding: 15px;
+	border-radius: 20px;
+	position: absolute;
+	right: 50px;
+	:hover {
+		background: black;
+		color: white;
+	}
+`
 
 const Search = ({ searchHandler, setInputText }) => {
 	const [text, setText] = useState("")
+	const [active, setActive] = useState(false)
 	const onChange = e => {
 		setText(e)
 		setInputText(e)
@@ -70,7 +74,8 @@ const Search = ({ searchHandler, setInputText }) => {
 				onChange={e => onChange(e.target.value)}
 				onKeyPress={SearchKeyPress}
 			/>
-
+			<Button onClick={() => setActive(true)}>deploy</Button>
+			<Modal active={active} setActive={setActive} />
 			{/* <Button>
 				<FontAwesomeIcon icon={faSearch} />
 			</Button> */}
